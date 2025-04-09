@@ -1385,7 +1385,11 @@ monocle(Monitor *m)
 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
     if (selmon->pertag->drawwithgaps[selmon->pertag->curtag])
-      resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
+      resize(c, 
+             m->wx + m->pertag->gappx[m->pertag->curtag], 
+             m->wy + m->pertag->gappx[m->pertag->curtag], 
+             m->ww - 2 * c->bw - 2 * m->pertag->gappx[m->pertag->curtag], 
+             m->wh - 2 * c->bw - 2 * m->pertag->gappx[m->pertag->curtag], 0);
     else
       resize(c, m->wx - c->bw, m->wy, m->ww, m->wh, False);
 }
