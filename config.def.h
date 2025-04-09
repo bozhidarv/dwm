@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#define SESSION_FILE "/tmp/dwm-session"
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const int startwithgaps[]    = { 0 };	/* 1 means gaps are used by default, this can be customized for each tag */
