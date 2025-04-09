@@ -161,6 +161,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_equal,                 setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,                 setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ShiftMask,             XK_equal,                 setgaps,        {.i = GAP_TOGGLE} },
+	{ MODKEY,                       XK_space,                 spawn,          SHCMD("xkb-switch -n && pkill -SIGRTMIN+14 dwmblocks") },
 	TAGKEYS(                        XK_1,                                     0)
 	TAGKEYS(                        XK_2,                                     1)
 	TAGKEYS(                        XK_3,                                     2)
@@ -171,7 +172,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                                     7)
 	TAGKEYS(                        XK_9,                                     8)
 	{ MODKEY|ShiftMask,             XK_r,                     quit,           {1} }, 
-	{ MODKEY|ShiftMask,             XK_q,                     spawn,          {.v = dPowermenu} }, 
+	{ MODKEY|ControlMask,           XK_q,                     spawn,          {.v = dPowermenu} }, 
 	{ MODKEY|ShiftMask,             XK_b,                     spawn,          {.v = browserCmd} },
   { 0,                            XF86XK_AudioRaiseVolume,  spawn,          { .v = volume[0] } },
 	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          { .v = volume[1] } },
