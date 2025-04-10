@@ -58,11 +58,12 @@ static const Rule rules[] = {
 	 */
 
 	/* class               instance  title   tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",	             NULL,		 NULL,		0,				 1,			     0,          1,         -1 },
-	{ "Firefox",           NULL,		 NULL,		1 << 8,		 0,			     0,          1,         -1 },
-  { "ghostty",           NULL,     NULL,    0,         0,          1,          0,         -1 },
-	{ "com.sc.yazi-float", NULL,     NULL,    SPTAG(0),  1,          0,          1,         -1 },
-	{ "Bitwarden",         NULL,     NULL,    SPTAG(1),  1,          0,          -1,        -1 },
+	{ "Gimp",	                 NULL,		 NULL,		0,				 1,			     0,          1,         -1 },
+	{ "Firefox",               NULL,		 NULL,		1 << 8,		 0,			     0,          1,         -1 },
+  { "ghostty",               NULL,     NULL,    0,         0,          1,          0,         -1 },
+	{ "com.sc.yazi-float",     NULL,     NULL,    SPTAG(0),  1,          1,          1,         -1 },
+	{ "com.sc.ask-permission", NULL,     NULL,    0,         1,          1,          1,         -1 },
+	{ "Bitwarden",             NULL,     NULL,    SPTAG(1),  1,          0,          -1,        -1 },
 };
 
 /* layout(s) */
@@ -89,28 +90,19 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+#define DMENU(CMD) { \
+  CMD, "-b",	    "-m",  dmenumon, \
+  "-fn",       dmenufont,   "-nb", normbgcolor, \
+  "-nf",       normfgcolor, "-sb", selbgcolor, \
+  "-sf",       selfgcolor,  NULL \
+}
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { 
-  "dmenu_run", "-b",	    "-m",  dmenumon,
-  "-fn",       dmenufont,   "-nb", normbgcolor,
-  "-nf",       normfgcolor, "-sb", selbgcolor,
-  "-sf",       selfgcolor,  NULL 
-};
-static const char *dPowermenu[] = { 
-  "dpowermenu.sh", "-b",	  "-m",
-  dmenumon,	     "-fn",	  dmenufont,
-  "-nb",	     normbgcolor, "-nf",
-  normfgcolor,     "-sb",	  selbgcolor,
-  "-sf",	     selfgcolor,  NULL
-};
-static const char *dmonitor[] = { 
-  "dmonitor.sh", "-b",	      "-m",
-  dmenumon,	 "-fn",	      dmenufont,
-  "-nb",	 normbgcolor, "-nf",
-  normfgcolor,	 "-sb",	      selbgcolor,
-  "-sf",	 selfgcolor,  NULL
-};
+static const char *dmenucmd[] = DMENU("dmenu_run"); 
+static const char *dPowermenu[] = DMENU("dpowermenu.sh");
+static const char *dmonitor[] = DMENU("dmonitor.sh");
+static const char *mounDrives[] = DMENU("mount-drives.sh");
 
 static const char *termcmd[]  = { "ghostty", NULL };
 static const char *kcalc[2] = { "kcalc", NULL };
@@ -156,6 +148,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,                   togglefloating, {0} },
 	{ MODKEY,                       XK_0,                     view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,                     tag,            {.ui = ~0 } },
+	{ MODKEY|ControlMask|ShiftMask, XK_0,                     toggletag,      {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,                 focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period,                focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,                 tagmon,         {.i = -1 } },
@@ -178,6 +171,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                                     8)
 	{ MODKEY|ShiftMask,             XK_r,                     quit,           {1} }, 
 	{ MODKEY|ControlMask,           XK_q,                     spawn,          {.v = dPowermenu} }, 
+	{ MODKEY|ControlMask,           XK_m,                     spawn,          {.v = mounDrives} }, 
 	{ MODKEY|ShiftMask,             XK_b,                     spawn,          {.v = browserCmd} },
   { 0,                            XF86XK_AudioRaiseVolume,  spawn,          { .v = volume[0] } },
 	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          { .v = volume[1] } },
