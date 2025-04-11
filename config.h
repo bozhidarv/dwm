@@ -41,11 +41,11 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"ghostty", "--class=com.sc.yazi-float", "--title=yazi_float", "--window-width=200", "--window-height=50", "-e", "yazi", NULL};
+const char *spcmd1[] = {"ghostty", "--class=com.sc.lf-float", "--title=lf", "--window-width=200", "--window-height=50", "-e", "lf", NULL};
 const char *spcmd2[] = {"bitwarden", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
-	{"spyazi",      spcmd1},
+	{"splf",      spcmd1},
 	{"bitwarden",   spcmd2},
 };
 
@@ -61,7 +61,7 @@ static const Rule rules[] = {
 	{ "Gimp",	                 NULL,		 NULL,		0,				 1,			     0,          1,         -1 },
 	{ "Firefox",               NULL,		 NULL,		1 << 8,		 0,			     0,          1,         -1 },
   { "ghostty",               NULL,     NULL,    0,         0,          1,          0,         -1 },
-	{ "com.sc.yazi-float",     NULL,     NULL,    SPTAG(0),  1,          1,          1,         -1 },
+	{ "com.sc.lf-float",       NULL,     NULL,    SPTAG(0),  1,          1,          1,         -1 },
 	{ "com.sc.ask-permission", NULL,     NULL,    0,         1,          1,          1,         -1 },
 	{ "Bitwarden",             NULL,     NULL,    SPTAG(1),  1,          0,          -1,        -1 },
 };
