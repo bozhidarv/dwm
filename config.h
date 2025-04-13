@@ -104,7 +104,7 @@ static const char *dPowermenu[] = DMENU("dpowermenu.sh");
 static const char *dmonitor[] = DMENU("dmonitor.sh");
 static const char *mounDrives[] = DMENU("mount-drives.sh");
 
-static const char *termcmd[]  = { "ghostty", NULL };
+static const char *termcmd[]  = { "/home/bozhv/.local/bin/ghostty", NULL };
 static const char *kcalc[2] = { "kcalc", NULL };
 static const char *volume[3][9] = {
 	{ "/bin/sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ +10% && pkill -SIGRTMIN+15 dwmblocks", NULL },
@@ -170,6 +170,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                                     7)
 	TAGKEYS(                        XK_9,                                     8)
 	{ MODKEY|ShiftMask,             XK_r,                     quit,           {1} }, 
+	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} }, 
 	{ MODKEY|ControlMask,           XK_q,                     spawn,          {.v = dPowermenu} }, 
 	{ MODKEY|ControlMask,           XK_m,                     spawn,          {.v = mounDrives} }, 
 	{ MODKEY|ShiftMask,             XK_b,                     spawn,          {.v = browserCmd} },
