@@ -101,10 +101,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = DMENU("dmenu_run"); 
-static const char *dPowermenu[] = DMENU("dpowermenu.sh");
-static const char *dmonitor[] = DMENU("dmonitor.sh");
-static const char *mounDrives[] = DMENU("mount-drives.sh");
+
+static const char *appPickerCmd[] = {"rofi", "-show", "drun", NULL}; 
+static const char *powerMenuCmd[] = {"rofi-powermenu.sh", NULL};
+static const char *monitorCmd[] = {"rofi-monitor.sh", NULL};
+static const char *mounDrivesCmd[] = DMENU("mount-drives.sh");
 
 static const char *termcmd[]  = { "/home/bozhv/.local/bin/ghostty", NULL };
 static const char *kcalc[2] = { "kcalc", NULL };
