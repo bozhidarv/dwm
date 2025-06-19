@@ -102,10 +102,13 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
+
+static const char *dmenucmd[] = {NULL}; 
+
 static const char *appPickerCmd[] = {"rofi", "-show", "drun", NULL}; 
 static const char *powerMenuCmd[] = {"rofi-powermenu.sh", NULL};
 static const char *monitorCmd[] = {"rofi-monitor.sh", NULL};
-static const char *mounDrivesCmd[] = DMENU("mount-drives.sh");
+static const char *mounDrivesCmd[] = {"mount-drives.sh", NULL};
 
 static const char *termcmd[]  = { "/home/bozhv/.local/bin/ghostty", NULL };
 static const char *kcalc[2] = { "kcalc", NULL };
@@ -130,8 +133,8 @@ static const char *browserCmd[] = { "google-chrome", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key                       function        argument */
-	{ MODKEY,                       XK_p,                     spawn,          {.v = dmenucmd } },
-	{ MODKEY|ControlMask,           XK_p,                     spawn,          {.v = dmonitor } },
+	{ MODKEY,                       XK_p,                     spawn,          {.v = appPickerCmd } },
+	{ MODKEY|ControlMask,           XK_p,                     spawn,          {.v = monitorCmd } },
 	{ MODKEY,                       XK_Return,                spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,                     togglebar,      {0} },
 	{ MODKEY,                       XK_j,                     focusstack,     {.i = +1 } },
@@ -174,8 +177,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                                     8)
 	{ MODKEY|ShiftMask,             XK_r,                     quit,           {1} }, 
 	{ MODKEY|ShiftMask,             XK_q,                     quit,           {0} }, 
-	{ MODKEY|ControlMask,           XK_q,                     spawn,          {.v = dPowermenu} }, 
-	{ MODKEY|ControlMask,           XK_m,                     spawn,          {.v = mounDrives} }, 
+	{ MODKEY|ControlMask,           XK_q,                     spawn,          {.v = powerMenuCmd} }, 
+	{ MODKEY|ControlMask,           XK_m,                     spawn,          {.v = mounDrivesCmd} }, 
 	{ MODKEY|ShiftMask,             XK_b,                     spawn,          {.v = browserCmd} },
   { 0,                            XF86XK_AudioRaiseVolume,  spawn,          { .v = volume[0] } },
 	{ 0,                            XF86XK_AudioLowerVolume,  spawn,          { .v = volume[1] } },
