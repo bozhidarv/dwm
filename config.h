@@ -23,18 +23,20 @@ static char *fonts[] = {
   "Font Awesome 6 Brands:size=11",
   "Material Icons:size=11",
 };
+
 static char dmenufont[] = "BlexMono Nerd Font:size=11";
-static char normbgcolor[] = "#2E3440";
-static char normbordercolor[] = "#181616";
-static char normfgcolor[] = "#ECEFF4";
-static char selfgcolor[] = "#2E3440";
-static char selbordercolor[] = "#aaaaaa";
-static char selbgcolor[] = "#88C0D0";
+
+/* Add these color definitions */
+static char normbgcolor[]       = "#1d1f21";
+static char normbordercolor[]       = "#373b41";
+static char normfgcolor[]       = "#ECEFF4";
+static char selfgcolor[]       = "#c5c8c6";
+static char selbordercolor[]        = "#81a2be";
 
 static char *colors[][3] = {
 	/*               fg           bg           border   */
 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-	[SchemeSel] =  { selfgcolor,  selbgcolor,  selbordercolor },
+	[SchemeSel] =  { normbordercolor,  selbordercolor,  selbordercolor },
 };
 
 typedef struct {
@@ -93,7 +95,7 @@ static const Layout layouts[] = {
 #define DMENU(CMD) { \
   CMD, "-b",	    "-m",  dmenumon, \
   "-fn",       dmenufont,   "-nb", normbgcolor, \
-  "-nf",       normfgcolor, "-sb", selbgcolor, \
+  "-nf",       normfgcolor, "-sb", selbordercolor, \
   "-sf",       selfgcolor,  NULL \
 }
 
