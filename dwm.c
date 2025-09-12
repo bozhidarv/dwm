@@ -258,6 +258,7 @@ static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
+static void rtile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglescratch(const Arg *arg);
@@ -2152,6 +2153,55 @@ tile(Monitor *m)
 	                } else {
 	                        h = (m->wh - ty) / (n - i) - m->pertag->gappx[m->pertag->curtag];
 	                        resize(c, m->wx + mw + m->pertag->gappx[m->pertag->curtag], m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->pertag->gappx[m->pertag->curtag], h - (2*c->bw), 0);
+	                        if (ty + HEIGHT(c) + m->pertag->gappx[m->pertag->curtag] < m->wh)
+	                                ty += HEIGHT(c) + m->pertag->gappx[m->pertag->curtag];
+	                }
+	} else { /* draw with singularborders logic */
+	        if (n > m->nmaster)
+	                mw = m->nmaster ? m->ww * m->mfact : 0;
+	        else
+	                mw = m->ww;
+	        for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+	                if (i < m->nmaster) {
+	                        h = (m->wh - my) / (MIN(n, m->nmaster) - i);
+	                        if (n == 1)
+	                                resize(c, m->wx - c->bw, m->wy, m->ww, m->wh, False);
+	                        else
+	                                resize(c, m->wx - c->bw, m->wy + my, mw - c->bw, h - c->bw, False);
+	                        my += HEIGHT(c) - c->bw;
+	                } else {
+	                        h = (m->wh - ty) / (n - i);
+	                        resize(c, m->wx + mw - c->bw, m->wy + ty, m->ww - mw, h - c->bw, False);
+	                        ty += HEIGHT(c) - c->bw;
+	                }
+	}
+}
+
+void
+rtile(Monitor *m)
+{
+	unsigned int i, n, h, mw, my, ty;
+	Client *c;
+
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if (n == 0)
+		return;
+	if (m->pertag->drawwithgaps[m->pertag->curtag]) { /* draw with fullgaps logic */
+	        if (n > m->nmaster)
+	                mw = m->nmaster ? m->ww * m->mfact : 0;
+	        else
+	                mw = m->ww - m->pertag->gappx[m->pertag->curtag];
+	        for (i = 0, my = ty = m->pertag->gappx[m->pertag->curtag], c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+	                if (i < m->nmaster) {
+	                        h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->pertag->gappx[m->pertag->curtag];
+	                        // resize(c, m->wx + m->pertag->gappx[m->pertag->curtag], m->wy + my, mw - (2*c->bw) - m->pertag->gappx[m->pertag->curtag], h - (2*c->bw), 0);
+                          resize(c, m->wx + m->ww - mw, m->wy + my, mw - (2*c->bw) - m->pertag->gappx[m->pertag->curtag], h - (2*c->bw), 0);
+	                        if (my + HEIGHT(c) + m->pertag->gappx[m->pertag->curtag] < m->wh)
+	                                my += HEIGHT(c) + m->pertag->gappx[m->pertag->curtag];
+	                } else {
+	                        h = (m->wh - ty) / (n - i) - m->pertag->gappx[m->pertag->curtag];
+	                        // resize(c, m->wx + mw + m->pertag->gappx[m->pertag->curtag], m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->pertag->gappx[m->pertag->curtag], h - (2*c->bw), 0);
+                          resize(c, m->wx + m->pertag->gappx[m->pertag->curtag], m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->pertag->gappx[m->pertag->curtag], h - (2*c->bw), 0);
 	                        if (ty + HEIGHT(c) + m->pertag->gappx[m->pertag->curtag] < m->wh)
 	                                ty += HEIGHT(c) + m->pertag->gappx[m->pertag->curtag];
 	                }
