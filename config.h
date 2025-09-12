@@ -45,10 +45,12 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {"ghostty", "--class=com.sc.lf-float", "--title=lf", "--window-width=200", "--window-height=50", "-e", "lf", NULL};
 const char *spcmd2[] = {"bitwarden", NULL };
+const char *spcmd3[] = {"ghostty", "--class=com.sc.spotify-float", "--title=Spotify", "--window-width=200", "--window-height=50", "-e", "spotify_player", NULL};
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"splf",      spcmd1},
 	{"bitwarden",   spcmd2},
+	{"spotify_player",   spcmd3},
 };
 
 /* tagging */
@@ -60,12 +62,13 @@ static const Rule rules[] = {
 	 */
 
 	/* class               instance  title   tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",	                 NULL,		 NULL,		0,				 1,			     0,          1,         -1 },
-	{ "Firefox",               NULL,		 NULL,		1 << 8,		 0,			     0,          1,         -1 },
-  { "ghostty",               NULL,     NULL,    0,         0,          1,          0,         -1 },
-	{ "com.sc.lf-float",       NULL,     NULL,    SPTAG(0),  1,          1,          1,         -1 },
-	{ "com.sc.ask-permission", NULL,     NULL,    0,         1,          1,          1,         -1 },
-	{ "Bitwarden",             NULL,     NULL,    SPTAG(1),  1,          0,          -1,        -1 },
+	{ "Gimp",	                  NULL,		  NULL,		 0,				  1,			    0,          1,         -1 },
+	{ "Firefox",                NULL,		  NULL,		 1 << 8,		0,			    0,          1,         -1 },
+  { "ghostty",                NULL,     NULL,    0,         0,          1,          0,         -1 },
+	{ "com.sc.lf-float",        NULL,     NULL,    SPTAG(0),  1,          1,          1,         -1 },
+	{ "com.sc.spotify-float",   NULL,     NULL,    SPTAG(2),  1,          1,          1,         -1 },
+	{ "com.sc.ask-permission",  NULL,     NULL,    0,         1,          1,          1,         -1 },
+	{ "Bitwarden",              NULL,     NULL,    SPTAG(1),  1,          0,          -1,        -1 },
 };
 
 /* layout(s) */
@@ -161,6 +164,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period,                tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_F1,                    togglescratch,  { .ui = 0 } },
 	{ MODKEY,                       XK_F2,                    togglescratch,  { .ui = 1 } },
+	{ MODKEY,                       XK_F3,                    togglescratch,  { .ui = 2 } },
 	{ MODKEY,                       XK_minus,                 setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,                 setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,                 setgaps,        {.i = GAP_RESET } },
